@@ -37,6 +37,9 @@ OSCVideo depends on two libraries:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*y1 (int): Top left y coordinate (px)*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*x2 (int): Bottom right x coordinate (px)*  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*y2 (int): Bottom right y coordinate (px)*   
+**/heartbeat** - Requests a heartbeat sequence specific to QLab.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*cueName (String): The of the cue in QLab that the method should interact with.  
 **/quit** - Terminates the program loop.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*QuitProcedure (String): Use one of thees keywords ['shutdown', 'reboot', 'quit']*  
