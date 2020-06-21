@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="MutterCourage_stor" showNewOnTargetInSync="false" showExcludedInSync="true">
+    <serverData>
+      <paths name="MutterCourage_lille">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/pi/Documents/code" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="MutterCourage_mellem">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/pi/Documents/code" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="MutterCourage_stor">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/pi/Documents/code" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
