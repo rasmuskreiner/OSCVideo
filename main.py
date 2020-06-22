@@ -16,7 +16,7 @@ run = True
 quitProcedure = {"quit": "", "shutdown": "sudo shutdown -h now", "reboot": "sudo reboot now","none": ""}
 quitProcedureSelected = "none"
 
-video_dir = "/home/pi/videos/" ##PATH TO VIDEOS
+video_dir = "" ##SPECIFY INITIAL PATH TO VIDEOS
 VIDEO_PATHS = ["#1.m4v", "#2.m4v",
                "#3.m4v", "#4.m4v",
                "#5.m4v", "#6.m4v",
@@ -88,7 +88,6 @@ def toInt(value):
 ##PLAYER FUNCTIONS
 def playPlayer(playerNumber, ip, filePath=""):
    global players
-   print(filePath)
    try:
       players[str(playerNumber)].play()
       trueFlag = False
@@ -113,7 +112,7 @@ def loadPlayer(playerNumber, ip, filePath=""):
    try:
       if players[str(playerNumber)].is_playing():
          if printToTerminal:
-            pass ##Do nothing cause the player is active.
+            print("Already playing")
          return
       else:
          players[str(playerNumber)].stop()
@@ -154,7 +153,7 @@ def stop_player(playerNumber, ip):
          send_console_message(ip=ip, message=console_message)
       else:
          if printToTerminal:
-            print ("Hey i do not exist")
+            print ("I do not exist")
    except Exception as e:
       print(e)
       players[str(playerNumber)] = None
@@ -163,7 +162,7 @@ def setArgsToPlayer(playerNumber, argument):
    global playerArgs
    if printToTerminal:
       print (playerNumber, argument)
-   # TODO IMPLEMENT THIS
+   # TODO IMPLEMENT THIS (List of args found here: https://elinux.org/Omxplayer)
 
 def setPositionOfPlayer(playerNumber, x1,y1,x2,y2):
    if printToTerminal:
@@ -195,7 +194,7 @@ def default_handler(*values):
 osc = OSCThreadServer(default_handler=default_handler)
 sock = osc.listen(address='0.0.0.0', port=int(oscPort), default=True)
 
-@osc.address(b"/heartbeat")
+@osc.address(b"/heartbeat                                                                                                                                                                                                                                                                                                                                                                                                                                                              ")
 def heartbeat_callback(*values):
    try:
       if len(values) > 0:
@@ -278,15 +277,13 @@ def setPosition_callback(*values):
 
 @osc.address(b"/load")
 def loadMovie_callback(*values):
+
    filePath = ""
 
    try:
       if len(values) == 2:
-         print("HERE 2")
          loadPlayer(playerNumber=toInt(values[0]), ip=osc.get_sender()[1])
       elif len(values) == 3:
-         print("HERE 3")
-         print(values)
          loadPlayer(playerNumber=toInt(values[0]), ip=osc.get_sender()[1], filePath=bytesAsString(values[2]))
       else:
          console_message = "Setting filepath failed. Missing arguments. These arguements has been passed {}".format(values)
@@ -299,14 +296,13 @@ def loadMovie_callback(*values):
 
 @osc.address(b"/play")
 def playMovie_callback(*values):
-   print("VALUES {}".format(values))
    if len(values)>1:
       playPlayer(playerNumber=toInt(values[0]), filePath=bytesAsString(values[1]), ip=osc.get_sender()[1])
    elif len(values)==1:
       playPlayer(playerNumber=toInt(values[0]), ip=osc.get_sender()[1])
    else:
       console_message = "Error starting the player. No arguments passed"
-      send_console_message()
+      send_console_message(ip=osc.get_sender()[1], message=console_message)
 
 @osc.address(b"/pause")
 def pauseMovie_callback(*values):
