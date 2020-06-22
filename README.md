@@ -43,3 +43,7 @@ OSCVideo depends on two libraries:
 **/quit** - Terminates the program loop.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*QuitProcedure (String): Use one of thees keywords ['shutdown', 'reboot', 'quit']*  
+##Todo's
+- Add the ability to use args
+- Make more user friendly
+- Better feedback to user
