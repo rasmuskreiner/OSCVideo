@@ -3,8 +3,12 @@ Turns your Raspberry Pi into a OSC-controlled videoplayer
 
 ### Install dependecies:
 OSCVideo depends on two libraries:  
-- **omxplayer-wrapper** – https://python-omxplayer-wrapper.readthedocs.io/en/latest/
-- **oscpy** – https://github.com/kivy/oscpy
+- **omxplayer-wrapper** – https://python-omxplayer-wrapper.readthedocs.io/en/latest/.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - sudo apt-get update.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - sudo apt-get install libdbus-1-dev.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install omxplayer-wrapper.  
+- **oscpy** – https://github.com/kivy/oscpy.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install oscpy
 ### Supported methods:  
 **/background_on** - Adds a black bottom layer and removes the command line.  
 **/background_off** - Removes the bottom layer and reverts to the command line.  
