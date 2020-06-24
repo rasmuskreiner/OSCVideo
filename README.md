@@ -58,7 +58,7 @@ OSCVideo depends on two libraries:
 
 **/testImage_on** - Displays a test image    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*cueName (String): The resolution of the test image ['pal', '720', '1080']  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cueName (String): The resolution of the test image ['pal', '720', '1080']  
 
 **/testImage_off** - Removes the test image
 
