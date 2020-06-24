@@ -45,7 +45,7 @@ OSCVideo depends on two libraries:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*y2 (int): Bottom right y coordinate (px)*   
 **/heartbeat** - Requests a heartbeat sequence specific to QLab. (See soon to come template)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cueName (String): The of the cue in QLab that the method should interact with.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cueName (String): The of the cue in QLab that the method should interact with.  
 **/testImage_on** - Displays a test image    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*cueName (String): The resolution of the test image ['pal', '720', '1080']  
