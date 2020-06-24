@@ -5,27 +5,37 @@ from oscpy.client import OSCClient
 from oscpy.server import OSCThreadServer
 from omxplayer.player import OMXPlayer
 import os
-from subprocess import call
+from subprocess import call, check_output
 from time import sleep
 import logging
+from pathlib import Path
+import os.path as op
 
 logging.basicConfig(level=logging.INFO)
 printToTerminal = False
 
 run = True
-quitProcedure = {"quit": "", "shutdown": "sudo shutdown -h now", "reboot": "sudo reboot now","none": ""}
+quitProcedure = {"quit": "", "shutdown": "sudo shutdown -h now", "reboot": "sudo reboot now", "none": ""}
 quitProcedureSelected = "none"
 
-video_dir = "" ##SPECIFY INITIAL PATH TO VIDEOS
+video_dir = "" # Specify initial path to video dir. Start with "/" to get an absolute path eg. "/home/pi/videos/"
+
 VIDEO_PATHS = ["#1.m4v", "#2.m4v",
                "#3.m4v", "#4.m4v",
                "#5.m4v", "#6.m4v",
                "#7.m4v", "#8.m4v",
                "#9.m4v", "#10.m4v"]
 
+##TODO GET SCREEN SIZE SO THAT WE ARE ABLE TO CONTROL ALPAH WITH THE WORKAROUND OF USING --win argument
+sdCheck = check_output("fbset -s", shell=True).decode('utf-8').split("\n")
+screenWidth = sdCheck[2].split(" ")[5]
+screenHeight = sdCheck[2].split(" ")[6]
+print("Resolution of the screen is {}x{}".format(screenWidth, screenHeight))
+
 player_log = logging.getLogger("Player 1")
 
 backGroundPlayer = None
+testImagePlayer = None
 
 players = {"1":None,
            "2": None,
@@ -38,16 +48,17 @@ players = {"1":None,
            "9": None,
            "10": None}
 
-playerArgs = {"1": ['--no-osd', '--no-keys'],
-              "2": ['--no-osd', '--no-keys'],
-              "3": ['--no-osd', '--no-keys'],
-              "4": ['--no-osd', '--no-keys'],
-              "5": ['--no-osd', '--no-keys'],
-              "6": ['--no-osd', '--no-keys'],
-              "7": ['--no-osd', '--no-keys'],
-              "8": ['--no-osd', '--no-keys'],
-              "9": ['--no-osd', '--no-keys'],
-              "10": ['--no-osd', '--no-keys']}
+##TODO GET BLANKING TO WORK
+playerArgs = {"1": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "2": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "3": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "4": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "5": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "6": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "7": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "8": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "9": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)],
+              "10": ['--no-osd', '--no-keys', '--win=0,0,{},{}'.format(screenWidth, screenHeight)]}
 
 playerLayer = {"1": ["1"],
               "2": ["2"],
@@ -122,10 +133,14 @@ def loadPlayer(playerNumber, ip, filePath=""):
    if players[str(playerNumber)] == None or trueFlag:
       pNum = int(playerNumber)
       pStr = str(int(playerNumber))
-      if filePath =="":
-         fp = video_dir + VIDEO_PATHS[pNum - 1]
+      addPathToDir = ""
+      if filePath[0] != "/":
+         print("ABSOLUTE NOT RELATIVE")
+         addPathToDir = video_dir
+      if filePath == "":
+         fp = addPathToDir + VIDEO_PATHS[pNum - 1]
       else:
-         fp = video_dir + filePath
+         fp = addPathToDir + filePath
       myArgs = playerArgs[pStr] + ['--layer'] + playerLayer[pStr] + playerLoop[pStr]
       console_message = ("Loading player#{} with theses args: {}".format(pStr, myArgs))
       dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayer' + str(playerNumber)
@@ -172,6 +187,8 @@ def setPositionOfPlayer(playerNumber, x1,y1,x2,y2):
 def setAlpha(playerNumber, alphaValue):
    global players
    try:
+      if printToTerminal:
+         print("SET ALPHA {}".format(players[str(playerNumber)]))
       players[str(playerNumber)].set_alpha(alphaValue)
    except:
       if printToTerminal:
@@ -194,7 +211,7 @@ def default_handler(*values):
 osc = OSCThreadServer(default_handler=default_handler)
 sock = osc.listen(address='0.0.0.0', port=int(oscPort), default=True)
 
-@osc.address(b"/heartbeat                                                                                                                                                                                                                                                                                                                                                                                                                                                              ")
+@osc.address(b"/heartbeat")
 def heartbeat_callback(*values):
    try:
       if len(values) > 0:
@@ -235,14 +252,11 @@ def showBlackBackGround_callback(*values):
       backGroundPlayer.set_aspect_mode('fill')
       backGroundPlayer.set_alpha(255)
       console_message = "Starting the background and setting the opacity to 255"
-      print(e)
-   print(console_message)
    send_console_message(ip=osc.get_sender()[1], message=console_message)
 
 @osc.address(b"/background_off")
 def removeBlackBackGround_callback(*values):
    global backGroundPlayer
-   console_message = "asd"
    try:
       if backGroundPlayer == None or backGroundPlayer.is_playing():
          backGroundPlayer.stop()
@@ -253,9 +267,53 @@ def removeBlackBackGround_callback(*values):
       console_message = e
    send_console_message(ip=osc.get_sender()[1], message=console_message)
 
+@osc.address(b"/testImage_on")
+def showTestImage_callback(*values):
+   global testImagePlayer
+   try:
+      if testImagePlayer == None or not testImagePlayer.is_playing():
+         print(values)
+         if str(values[0]) == "720":
+            fn = "TEST_SCREEN_720P.m4v"
+         elif str(values[0]) == "1080":
+            fn = "TEST_SCREEN_1080P.m4v"
+         else:
+            fn = "TEST_SCREEN_PAL.m4v"
+         path = "Static_files/" + fn
+         dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayerTestImage'
+         testImagePlayer = OMXPlayer(source=path,
+                                      args=['--no-osd', '--no-keys', '--loop'],
+                                      dbus_name=dbus_name_tmp,
+                                      pause=False)
+         testImagePlayer.set_aspect_mode('fill')
+         testImagePlayer.set_alpha(255)
+         console_message = "Starting the test image and setting the opacity to 255"
+      else:
+         testImagePlayer.set_alpha(255)
+         console_message = "Setting the opactity to 255 on the test image"
+   except Exception as e:
+      console_message = "Could not display test image: {}".format(e)
+   send_console_message(ip=osc.get_sender()[1], message=console_message)
+
+@osc.address(b"/testImage_off")
+def removeBlackBackGround_callback(*values):
+   global testImagePlayer
+   try:
+      if testImagePlayer == None or testImagePlayer.is_playing():
+         testImagePlayer.stop()
+         console_message = "Stopping the test image"
+         testImagePlayer = None
+      else:
+         console_message = "Test image not playing"
+   except Exception as e:
+      console_message = e
+   send_console_message(ip=osc.get_sender()[1], message=console_message)
+
 @osc.address(b"/opacity")
 def setAlpha_callback(*values):
    try:
+      if printToTerminal:
+         print("OPACITY {}".format(values))
       setAlpha(playerNumber=toInt(values[0]), alphaValue=toInt(values[1]))
    except:
       msg = "Values are missing or in wrong format: {}".format(values)
@@ -279,7 +337,6 @@ def setPosition_callback(*values):
 def loadMovie_callback(*values):
 
    filePath = ""
-
    try:
       if len(values) == 2:
          loadPlayer(playerNumber=toInt(values[0]), ip=osc.get_sender()[1])

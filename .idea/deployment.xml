@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="MutterCourage_stor" showNewOnTargetInSync="false" showExcludedInSync="true">
+  <component name="PublishConfigData" autoUpload="Always" serverName="pi@10.17.96.209:22" showNewOnTargetInSync="false" showExcludedInSync="true">
     <serverData>
       <paths name="MutterCourage_lille">
         <serverdata>
@@ -20,6 +20,13 @@
         <serverdata>
           <mappings>
             <mapping deploy="/home/pi/Documents/code" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="pi@10.17.96.209:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/pi/Documents/OSCvideo" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

@@ -1,13 +1,15 @@
 # OSCVideo
-Turns your Raspberry Pi into a OSC-controlled videoplayer
+Turns your Raspberry Pi into a OSC-controlled video player.  
+
+
 
 ### Install dependecies:
 OSCVideo depends on two libraries:  
-- **omxplayer-wrapper** – https://python-omxplayer-wrapper.readthedocs.io/en/latest/.  
+- **omxplayer-wrapper** – https://python-omxplayer-wrapper.readthedocs.io/en/latest/  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - sudo apt-get update.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - sudo apt-get install libdbus-1-dev.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install omxplayer-wrapper.  
-- **oscpy** – https://github.com/kivy/oscpy.  
+- **oscpy** – https://github.com/kivy/oscpy  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install oscpy
 ### Supported methods:  
 **/background_on** - Adds a black bottom layer and removes the command line.  
@@ -43,7 +45,11 @@ OSCVideo depends on two libraries:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*y2 (int): Bottom right y coordinate (px)*   
 **/heartbeat** - Requests a heartbeat sequence specific to QLab. (See soon to come template)    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*cueName (String): The of the cue in QLab that the method should interact with.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cueName (String): The of the cue in QLab that the method should interact with.
+**/testImage_on** - Displays a test image    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*cueName (String): The resolution of the test image ['pal', '720', '1080']  
+**/testImage_off** - Removes the test image
 **/quit** - Terminates the program loop.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*QuitProcedure (String): Use one of thees keywords ['shutdown', 'reboot', 'quit']*  
@@ -51,3 +57,4 @@ OSCVideo depends on two libraries:
 - Add the ability to use args
 - Make more user friendly
 - Better feedback to user
+- Make set_alpha work on buster
