@@ -282,7 +282,7 @@ def showTestImage_callback(*values):
          path = "Static_files/" + fn
          dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayerTestImage'
          testImagePlayer = OMXPlayer(source=path,
-                                      args=['--no-osd', '--no-keys', '--loop'],
+                                      args=['--no-osd', '--no-keys', '--loop', '--layer=11'],
                                       dbus_name=dbus_name_tmp,
                                       pause=False)
          testImagePlayer.set_aspect_mode('fill')
