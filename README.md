@@ -7,7 +7,7 @@ A fully working image can be found here: http://rasmuskreiner.dk/OSCVideo.zip. F
 To start the server double click the start server icon on the desktop. To quit/reboot or shutdown while software is running please use the OSC command below. 
 Login details for the smb server is: user: pi, pass: oscVIDEO
 
-### Install dependecies:
+### Manually install:
 OSCVideo depends on two libraries:  
 - **omxplayer-wrapper** – https://python-omxplayer-wrapper.readthedocs.io/en/latest/  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - sudo apt-get update.  
@@ -15,6 +15,11 @@ OSCVideo depends on two libraries:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install omxplayer-wrapper.  
 - **oscpy** – https://github.com/kivy/oscpy  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - pip3 install oscpy
+
+Install using:   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - cd /home/pi/Documents.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - git clone https://github.com/rasmuskreiner/OSCVideo.git
+
 ### Supported methods:  
 **/background_on** - Adds a black bottom layer and removes the command line.
   
