@@ -1,7 +1,8 @@
 # OSCVideo
 Turns your Raspberry Pi into a OSC-controlled video player.  
 
-
+### Download
+A fully working image can be found here: http://rasmuskreiner.dk/OSCVideo.zip. Flash onto your own SD-card using [ApplePiBaker](https://www.tweaking4all.com/software/macosx-software/applepi-baker-v2/).
 
 ### Install dependecies:
 OSCVideo depends on two libraries:  

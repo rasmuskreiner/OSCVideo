@@ -18,7 +18,7 @@ run = True
 quitProcedure = {"quit": "", "shutdown": "sudo shutdown -h now", "reboot": "sudo reboot now", "none": ""}
 quitProcedureSelected = "none"
 
-video_dir = "" # Specify initial path to video dir. Start with "/" to get an absolute path eg. "/home/pi/videos/"
+video_dir = "/home/pi/Documents/OSCvideo/" # Specify initial path to video dir. Start with "/" to get an absolute path eg. "/home/pi/videos/"
 
 VIDEO_PATHS = ["#1.m4v", "#2.m4v",
                "#3.m4v", "#4.m4v",
@@ -141,6 +141,7 @@ def loadPlayer(playerNumber, ip, filePath=""):
          fp = addPathToDir + VIDEO_PATHS[pNum - 1]
       else:
          fp = addPathToDir + filePath
+
       myArgs = playerArgs[pStr] + ['--layer'] + playerLayer[pStr] + playerLoop[pStr]
       console_message = ("Loading player#{} with theses args: {}".format(pStr, myArgs))
       dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayer' + str(playerNumber)
@@ -230,7 +231,7 @@ def showBlackBackGround_callback(*values):
    global backGroundPlayer
    try:
       if backGroundPlayer == None or not backGroundPlayer.is_playing():
-         path = "Static_files/BLACK.m4v"
+         path = video_dir + "Static_files/BLACK.m4v"
          dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayerBackGround'
          backGroundPlayer = OMXPlayer(source=path,
                                       args=['--no-osd', '--no-keys', '--loop'],
@@ -252,7 +253,10 @@ def showBlackBackGround_callback(*values):
       backGroundPlayer.set_aspect_mode('fill')
       backGroundPlayer.set_alpha(255)
       console_message = "Starting the background and setting the opacity to 255"
-   send_console_message(ip=osc.get_sender()[1], message=console_message)
+   try:
+      send_console_message(ip=osc.get_sender()[1], message=console_message)
+   except Exception as e:
+      print("Initial black out of screen - Send \"/background_off\" to reveal desktop")
 
 @osc.address(b"/background_off")
 def removeBlackBackGround_callback(*values):
@@ -260,6 +264,7 @@ def removeBlackBackGround_callback(*values):
    try:
       if backGroundPlayer == None or backGroundPlayer.is_playing():
          backGroundPlayer.stop()
+         backGroundPlayer = None
          console_message = "Stopping the background"
       else:
          console_message = "Background not playing"
@@ -272,14 +277,13 @@ def showTestImage_callback(*values):
    global testImagePlayer
    try:
       if testImagePlayer == None or not testImagePlayer.is_playing():
-         print(values)
          if str(values[0]) == "720":
             fn = "TEST_SCREEN_720P.m4v"
          elif str(values[0]) == "1080":
             fn = "TEST_SCREEN_1080P.m4v"
          else:
             fn = "TEST_SCREEN_PAL.m4v"
-         path = "Static_files/" + fn
+         path = video_dir + "Static_files/" + fn
          dbus_name_tmp = 'org.mpris.MediaPlayer2.omxplayerTestImage'
          testImagePlayer = OMXPlayer(source=path,
                                       args=['--no-osd', '--no-keys', '--loop', '--layer=11'],
@@ -408,6 +412,7 @@ def quit_callback(*values):
       print (quitProcedureSelected)
 
 print("###SYSTEM HAS STARTED###")
+showBlackBackGround_callback()
 
 # Program loop
 while run:

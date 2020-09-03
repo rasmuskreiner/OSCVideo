@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="78718cac-66b3-4d28-8428-62caf4941755" name="RaspberryPi_Kontor" url="http://10.17.96.209">
-        <fileTransfer accessType="SFTP" host="192.168.168.32" port="22" sshConfigId="2547cb92-aaa2-4342-b1a0-450c99d87d07" sshConfig="pi@192.168.168.32:22 password">
+        <fileTransfer accessType="SFTP" host="192.168.168.234" port="22" sshConfigId="2547cb92-aaa2-4342-b1a0-450c99d87d07" sshConfig="pi@192.168.168.234:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
