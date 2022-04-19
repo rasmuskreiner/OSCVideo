@@ -12,7 +12,7 @@ from pathlib import Path
 import os.path as op
 
 logging.basicConfig(level=logging.INFO)
-printToTerminal = False
+printToTerminal = True
 
 run = True
 quitProcedure = {"quit": "", "shutdown": "sudo shutdown -h now", "reboot": "sudo reboot now", "none": ""}
@@ -115,7 +115,7 @@ def playPlayer(playerNumber, ip, filePath=""):
       players[str(playerNumber)].play()
       console_message = ("Playling player #{}".format(str(playerNumber)))
    except Exception as e:
-      console_message = ("Failing to play player #{}. Errormessage is: {}".format(str(playerNumber)), e)
+      console_message = "Failing to play player #{}. Errormessage is: {}".format(str(playerNumber), e)
    send_console_message(ip=ip, message=console_message)
 
 def loadPlayer(playerNumber, ip, filePath=""):
